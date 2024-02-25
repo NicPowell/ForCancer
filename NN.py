@@ -11,11 +11,19 @@ import torch.optim as optim
 torch.set_printoptions(precision=2, sci_mode=False)
 
 # Load data
-df = pd.read_csv('BinFeat+125Data2020.csv')
+df = pd.read_csv('surveylungcancer.csv')
 
 # Separate features and target
-X = df.drop('24', axis=1).values  # Assuming '24' is your target column
-y = df['24'].values
+X = df.drop('LUNG_CANCER', axis=1).values  # Assuming '24' is your target column
+
+y = df['LUNG_CANCER']
+y.replace({'YES': 2, 'NO': 1}, inplace=True)
+y = df['LUNG_CANCER'].values
+yh = df['GENDER']
+
+yh.replace({'M': 1, 'F': 2}, inplace=True)
+yh = df['GENDER'].values
+print(yh)
 
 # Normalize features
 scaler = StandardScaler()
