@@ -3,128 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionnaire</title>
+    <title>Lung Cancer Questionnaire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f7f6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .tab {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px 20px;
+            z-index: 1000;
+            width: 90%; /* Adjust as needed */
+            box-sizing: border-box;
+        }
+        .tab a {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .tab a:hover {
+            background-color: #ddd;
+        }
+        .content {
+            margin-top: 50px; /* Adjust to match height of tab menu */
+            padding-top: 20px; /* Add padding to avoid content being hidden behind fixed menu */
+        }
+    </style>
 </head>
 <body>
-    <h1>Questionnaire</h1>
-    <form id="question-form">
-        <!-- Question 1 -->
-        <label for="question1">Question 1: Are you male?</label><br>
-        <input type="radio" id="yes1" name="question1" value="yes">
-        <label for="yes1">Yes</label>
-        <input type="radio" id="no1" name="question1" value="no">
-        <label for="no1">No</label><br>
+    <div class="container">
+        <div class="tab">
+            <a href="/" class="tablinks">Home</a>
+            <a href="/skin_cancer" class="tablinks">Skin Cancer</a>
+            <a href="/lung_cancer" class="tablinks">Lung Cancer</a>
+        </div>
 
-        <!-- Question 2 -->
-        <label for="question2">Question 2: What is your age?</label><br>
-        <input type="radio" id="yes2" name="question2" value="yes">
-        <label for="yes2">Yes</label>
-        <input type="radio" id="no2" name="question2" value="no">
-        <label for="no2">No</label><br>
+        <div class="content">
+            <!-- Your questionnaire content here -->
+            <h1>Questionnaire</h1>
+            <form id="question-form">
+                <!-- Question 1 -->
+                <label for="question1">Question 1: Are you male?</label><br>
+                <input type="radio" id="yes1" name="question1" value="yes">
+                <label for="yes1">Yes</label>
+                <input type="radio" id="no1" name="question1" value="no">
+                <label for="no1">No</label><br>
 
-        <!-- Question 3 -->
-        <label for="question3">Question 3: Do you smoke?</label><br>
-        <input type="radio" id="yes1" name="question3" value="yes">
-        <label for="yes1">Yes</label>
-        <input type="radio" id="no1" name="question3" value="no">
-        <label for="no1">No</label><br>
+                <!-- Question 2 -->
+                <label for="question2">Question 2: What is your age?</label><br>
+                <input type="radio" id="yes2" name="question2" value="yes">
+                <label for="yes2">Yes</label>
+                <input type="radio" id="no2" name="question2" value="no">
+                <label for="no2">No</label><br>
 
-        <!-- Question 4 -->
-        <label for="question4">Question 4: Do your fingers appear yellow?</label><br>
-        <input type="radio" id="yes2" name="question4" value="yes">
-        <label for="yes2">Yes</label>
-        <input type="radio" id="no2" name="question4" value="no">
-        <label for="no2">No</label><br>
+                <!-- Question 3 -->
+                <label for="question3">Question 3: Do you smoke?</label><br>
+                <input type="radio" id="yes1" name="question3" value="yes">
+                <label for="yes1">Yes</label>
+                <input type="radio" id="no1" name="question3" value="no">
+                <label for="no1">No</label><br>
 
-        <!-- Question 5 -->
-        <label for="question5">Question 5: Do you suffer from anxiety?</label><br>
-        <input type="radio" id="yes1" name="question5" value="yes">
-        <label for="yes1">Yes</label>
-        <input type="radio" id="no1" name="question5" value="no">
-        <label for="no1">No</label><br>
+                <!-- Question 4 -->
+                <label for="question4">Question 4: Do your fingers appear yellow?</label><br>
+                <input type="radio" id="yes2" name="question4" value="yes">
+                <label for="yes2">Yes</label>
+                <input type="radio" id="no2" name="question4" value="no">
+                <label for="no2">No</label><br>
 
-        <!-- Question 6 -->
-        <label for="question6">Question 6: Were you peer pressured into smoking?</label><br>
-        <input type="radio" id="yes2" name="question6" value="yes">
-        <label for="yes2">Yes</label>
-        <input type="radio" id="no2" name="question6" value="no">
-        <label for="no2">No</label><br>
+                <!-- Question 5 -->
+                <label for="question5">Question 5: Do you suffer from anxiety?</label><br>
+                <input type="radio" id="yes1" name="question5" value="yes">
+                <label for="yes1">Yes</label>
+                <input type="radio" id="no1" name="question5" value="no">
+                <label for="no1">No</label><br>
 
-        <!-- Question 7 -->
-        <label for="question7">Question 7: Do you have any other chronic illness?</label><br>
-        <input type="radio" id="yes1" name="question7" value="yes">
-        <label for="yes1">Yes</label>
-        <input type="radio" id="no1" name="question7" value="no">
-        <label for="no1">No</label><br>
+                <!-- Question 6 -->
+                <label for="question6">Question 6: Were you peer pressured into smoking?</label><br>
+                <input type="radio" id="yes2" name="question6" value="yes">
+                <label for="yes2">Yes</label>
+                <input type="radio" id="no2" name="question6" value="no">
+                <label for="no2">No</label><br>
 
-        <!-- Question 8 -->
-        <label for="question8">Question 8: Do you often feel fatigued </label><br>
-        <input type="radio" id="yes2" name="question8" value="yes">
-        <label for="yes2">Yes</label>
-        <input type="radio" id="no2" name="question8" value="no">
-        <label for="no2">No</label><br>
+                <!-- Question 7 -->
+                <label for="question7">Question 7: Do you have any other chronic illness?</label><br>
+                <input type="radio" id="yes1" name="question7" value="yes">
+                <label for="yes1">Yes</label>
+                <input type="radio" id="no1" name="question7" value="no">
+                <label for="no1">No</label><br>
 
-        <!-- Question 9 -->
-        <label for="question9">Question 9: Do you suffer from allergies?</label><br>
-        <input type="radio" id="yes1" name="question9" value="yes">
-        <label for="yes1">Yes</label>
-        <input type="radio" id="no1" name="question9" value="no">
-        <label for="no1">No</label><br>
+                <!-- Question 8 -->
+                <label for="question8">Question 8: Do you often feel fatigued </label><br>
+                <input type="radio" id="yes2" name="question8" value="yes">
+                <label for="yes2">Yes</label>
+                <input type="radio" id="no2" name="question8" value="no">
+                <label for="no2">No</label><br>
 
-        <!-- Question 10 -->
-        <label for="question10">Question 10: Do you Wheeze?</label><br>
-        <input type="radio" id="yes2" name="question10" value="yes">
-        <label for="yes2">Yes</label>
-        <input type="radio" id="no2" name="question10" value="no">
-        <label for="no2">No</label><br>
+                <!-- Question 9 -->
+                <label for="question9">Question 9: Do you suffer from allergies?</label><br>
+                <input type="radio" id="yes1" name="question9" value="yes">
+                <label for="yes1">Yes</label>
+                <input type="radio" id="no1" name="question9" value="no">
+                <label for="no1">No</label><br>
 
-        <!-- Question 11 -->
-        <label for="question1">Question 11: Do you consume a lot of alchol?</label><br>
-        <input type="radio" id="yes1" name="question11" value="yes">
-        <label for="yes1">Yes</label>
-        <input type="radio" id="no1" name="question11" value="no">
-        <label for="no1">No</label><br>
+                <!-- Question 10 -->
+                <label for="question10">Question 10: Do you Wheeze?</label><br>
+                <input type="radio" id="yes2" name="question10" value="yes">
+                <label for="yes2">Yes</label>
+                <input type="radio" id="no2" name="question10" value="no">
+                <label for="no2">No</label><br>
 
-        <!-- Question 12 -->
-        <label for="question2">Question 12: Do you cough excessivly?</label><br>
-        <input type="radio" id="yes2" name="question12" value="yes">
-        <label for="yes2">Yes</label>
-        <input type="radio" id="no2" name="question12" value="no">
-        <label for="no2">No</label><br>
+                <!-- Question 11 -->
+                <label for="question1">Question 11: Do you consume a lot of alchol?</label><br>
+                <input type="radio" id="yes1" name="question11" value="yes">
+                <label for="yes1">Yes</label>
+                <input type="radio" id="no1" name="question11" value="no">
+                <label for="no1">No</label><br>
 
-        <!-- Question 13 -->
-        <label for="question1">Question 13: Do you have a shortness of breath?</label><br>
-        <input type="radio" id="yes1" name="question13" value="yes">
-        <label for="yes1">Yes</label>
-        <input type="radio" id="no1" name="question13" value="no">
-        <label for="no1">No</label><br>
+                <!-- Question 12 -->
+                <label for="question2">Question 12: Do you cough excessivly?</label><br>
+                <input type="radio" id="yes2" name="question12" value="yes">
+                <label for="yes2">Yes</label>
+                <input type="radio" id="no2" name="question12" value="no">
+                <label for="no2">No</label><br>
 
-        <!-- Question 14 -->
-        <label for="question2">Question 14: Do you struggle to swallow?</label><br>
-        <input type="radio" id="yes2" name="question14" value="yes">
-        <label for="yes2">Yes</label>
-        <input type="radio" id="no2" name="question14" value="no">
-        <label for="no2">No</label><br>
+                <!-- Question 13 -->
+                <label for="question1">Question 13: Do you have a shortness of breath?</label><br>
+                <input type="radio" id="yes1" name="question13" value="yes">
+                <label for="yes1">Yes</label>
+                <input type="radio" id="no1" name="question13" value="no">
+                <label for="no1">No</label><br>
 
-        <!-- Question 15 -->
-        <label for="question1">Question 15: Do you suffer from chest pain?</label><br>
-        <input type="radio" id="yes1" name="question15" value="yes">
-        <label for="yes1">Yes</label>
-        <input type="radio" id="no1" name="question15" value="no">
-        <label for="no1">No</label><br>
+                <!-- Question 14 -->
+                <label for="question2">Question 14: Do you struggle to swallow?</label><br>
+                <input type="radio" id="yes2" name="question14" value="yes">
+                <label for="yes2">Yes</label>
+                <input type="radio" id="no2" name="question14" value="no">
+                <label for="no2">No</label><br>
 
-        <!-- Question 16 -->
-        <label for="question2">Question 16: Do you have lung cancer?</label><br>
-        <input type="radio" id="yes2" name="question16" value="yes">
-        <label for="yes2">Yes</label>
-        <input type="radio" id="no2" name="question16" value="no">
-        <label for="no2">No</label><br>
+                <!-- Question 15 -->
+                <label for="question1">Question 15: Do you suffer from chest pain?</label><br>
+                <input type="radio" id="yes1" name="question15" value="yes">
+                <label for="yes1">Yes</label>
+                <input type="radio" id="no1" name="question15" value="no">
+                <label for="no1">No</label><br>
 
-        <!-- Repeat for all questions -->
+                <!-- Question 16 -->
+                <label for="question2">Question 16: Do you have lung cancer?</label><br>
+                <input type="radio" id="yes2" name="question16" value="yes">
+                <label for="yes2">Yes</label>
+                <input type="radio" id="no2" name="question16" value="no">
+                <label for="no2">No</label><br>
 
-        <!-- Submit button -->
-        <button type="submit">Submit</button>
-    </form>
+                <!-- Submit button -->
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
 
     <script>
         // Handle form submission
