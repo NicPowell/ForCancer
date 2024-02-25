@@ -3,57 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Result</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f1f1; /* Light pink background */
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        p {
-            text-align: center;
-            font-size: 24px;
-            margin-top: 20px;
-        }
-        .result-message {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .result-info {
-            margin-top: 20px;
-        }
-        .result-info p {
-            margin: 5px 0;
-        }
-        .result-info p:last-child {
-            margin-bottom: 0;
-        }
-        .result-word {
-            color: #333; /* Red color for the result */
-            font-size: 36px; /* Larger font size for the result */
-        }
-    </style>
+    <title>Result</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Your Result</h1>
-        <p class="result-message">The lesion is classified as <span class="result-word">{{ result }}</span></p>
-        <div class="result-info">
-            <!-- Additional information goes here -->
-        </div>
+    <h1>Classification Result</h1>
+    
+    <div>
+        <p>Predicted Class: {{ predicted_class }}</p>
+        <p>Probabilities: {{ probabilities }}</p>
     </div>
 </body>
 </html>

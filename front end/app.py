@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from inference import load_model, predict_image
 import os
-from inference import load_model, predict_image
 
 app = Flask(__name__)
 
@@ -9,13 +8,13 @@ app = Flask(__name__)
 model_load_path = 'pretrained_mobilenetv2.pth'
 model, class_labels, mean, std = load_model(model_load_path)
 
-answers_dict = {}
 UPLOAD_FOLDER = 'uploads'  # Directory to store uploaded files
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Create the uploads directory if it doesn't exist
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -30,47 +29,43 @@ def lung_cancer():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    global answers_dict
-    data = request.json
-    answers_dict.update(data)
-    print(answers_dict)
+    # Handle form submission
     return jsonify({'message': 'Data received successfully'})
 
 @app.route('/classify', methods=['POST'])
-
 def upload_image():
     if 'fileInput' not in request.files:
-        return jsonify({'error': 'No file part'})
-    
+        return jsonify({'error': 'No file part'}), 400
+
     file = request.files['fileInput']
     if file.filename == '':
-        return jsonify({'error': 'No selected file'})
-    
+        return jsonify({'error': 'No selected file'}), 400
+
     # Save the uploaded file to the uploads directory
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], 'temp.jpg'))
 
-    #Classification
-    model_load_path = 'pretrained_mobilenetv2.pth'
-
+    # Classification
     # Load the model, class labels, mean, and std
     model, class_labels, mean, std = load_model(model_load_path)
 
     # Path to the input image
-    input_image_path = '/Users/freddiehurdwood/Desktop/Uni Work/ForCancer/uploads/temp.jpg'
+    input_image_path = 'uploads/temp.jpg'
 
     # Perform inference
     predicted_class, probabilities = predict_image(input_image_path, model, class_labels, mean, std)
+    predicted_class = int(predicted_class)
+    probabilities = float(probabilities)
     print(predicted_class, probabilities)
-    os.remove('/Users/freddiehurdwood/Desktop/Uni Work/ForCancer/uploads/temp.jpg')
-#classifcation ends
-    
-    return jsonify({'message': 'Image saved successfully'})
+    os.remove('uploads/temp.jpg')
 
+    # Render result template with predicted class and probabilities
+    return jsonify({'predicted_class': predicted_class, 'probabilities': probabilities})
 
 @app.route('/result')
 def result():
     predicted_class = request.args.get('predicted_class')
     probabilities = request.args.get('probabilities')
+    print('hello',predicted_class)
     return render_template('result.html', predicted_class=predicted_class, probabilities=probabilities)
 
 if __name__ == '__main__':

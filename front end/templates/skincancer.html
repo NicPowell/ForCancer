@@ -19,30 +19,6 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .tab {
-            position: fixed;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #f1f1f1;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 10px 20px;
-            z-index: 1000;
-            width: 90%; /* Adjust as needed */
-            box-sizing: border-box;
-        }
-        .tab a {
-            display: inline-block;
-            padding: 10px 20px;
-            text-decoration: none;
-            color: #333;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-        .tab a:hover {
-            background-color: #ddd;
-        }
         h1 {
             color: #333;
             text-align: center;
@@ -87,12 +63,6 @@
     </style>
 </head>
 <body>
-    <div class="tab">
-        <a href="/" class="tablinks">Home</a>
-        <a href="/skin_cancer" class="tablinks">Skin Cancer</a>
-        <a href="/lung_cancer" class="tablinks">Lung Cancer</a>
-    </div>
-
     <div class="container">
         <h1>Lung Cancer Medical Classification</h1>
 
@@ -105,31 +75,35 @@
     </div>
 
     <script>
-       function uploadImage() {
-    var form = document.getElementById("uploadForm");
-    var formData = new FormData(form);
-    console.log(formData); // Check FormData object in the console
-    var xhr = new XMLHttpRequest();
-    
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.message) {
-                    alert(response.message); // Alert message
-                } else {
-                    alert('Image submitted'); // Default message if no custom message is received
-                }
-            } else {
-                alert('Error: ' + xhr.status);
-            }
-        }
-    };
-    
-    xhr.open("POST", "/classify", true);
-    xhr.send(formData);
-}
+      function uploadImage() {
+        var form = document.getElementById("uploadForm");
+        var formData = new FormData(form);
+        var xhr = new XMLHttpRequest();
 
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Handle the response data and update the current page
+                    var response = JSON.parse(xhr.responseText);
+                    var predictedClass = response.predicted_class;
+                    var probabilities = response.probabilities;
+                    
+                    // Redirect to the result page with the received values
+                    window.location.href = '/result?predicted_class=' + predictedClass + '&probabilities=' + probabilities;
+                } else {
+                    alert('Error: ' + xhr.status);
+                }
+            }
+        };
+
+        xhr.open("POST", "/classify", true);
+        xhr.send(formData);
+    }
+
+
+
+
+        // Function to preview image
         function previewImage(event) {
             var file = event.target.files[0];
             var reader = new FileReader();
