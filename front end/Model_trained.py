@@ -20,7 +20,7 @@ if __name__ == '__main__':
     df.replace({'YES': 2, 'NO': 1}, inplace=True)
 
 
-    df.replace({'M': 1, 'F': 2}, inplace=True)
+    df.replace({'M': 2, 'F': 1}, inplace=True)
 
 
     # Separate features and target
@@ -29,11 +29,16 @@ if __name__ == '__main__':
 
 
     # Normalize features
-    scaler = StandardScaler()
-    X_normalized = scaler.fit_transform(X)
-
+    #scaler = StandardScaler()
+    #X_normalized = scaler.fit_transform(X)
+    
     # Split into training and testing set
-    X_train, X_test, y_train, y_test = train_test_split(X_normalized, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.99, random_state=42)
+
+    X_train = X
+    y_train = y
+    X_test = X
+    y_test = y
     print(X_train.shape)
     print(y_train.shape)
     print(X_test.shape)
@@ -52,25 +57,26 @@ if __name__ == '__main__':
     test_loader = DataLoader(test_data, batch_size=64, shuffle=True)
 
     class Net(nn.Module):
-        def __init__(self, input_size):
-            super(Net, self).__init__()
-            self.fc1 = nn.Linear(input_size, 128)
-            self.fc2 = nn.Linear(128, 64)
-            self.fc3 = nn.Linear(64, 1)
+            def __init__(self, input_size):
+                super(Net, self).__init__()
+                self.fc1 = nn.Linear(input_size, 128)
+                self.fc2 = nn.Linear(128, 64)
+                self.fc3 = nn.Linear(64, 1)
 
-        def forward(self, x):
-            x = F.relu(self.fc1(x))
-            x = F.relu(self.fc2(x))
-            x = self.fc3(x)
-            return x
+            def forward(self, x):
+                x = F.relu(self.fc1(x))
+                x = F.relu(self.fc2(x))
+                x = self.fc3(x)
+                return x
 
     # Initialize model, loss function, and optimizer
     N = X_train.shape[1]  # Number of features
+    
     model = Net(input_size=N)
     criterion = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-    def train_model(model, train_loader, criterion, optimizer, epochs=20):
+    def train_model(model, train_loader, criterion, optimizer, epochs=2000):
         model.train()
         for epoch in range(epochs):
             for inputs, labels in train_loader:
@@ -79,7 +85,7 @@ if __name__ == '__main__':
                 loss = criterion(outputs, labels.view(-1, 1))
                 loss.backward()
                 optimizer.step()
-            print(f'Epoch {epoch+1}/{epochs}, Loss: {loss.item()}')
+            #print(f'Epoch {epoch+1}/{epochs}, Loss: {loss.item()}')
 
     def test_model(model, test_loader, criterion):
         model.eval()
@@ -114,16 +120,19 @@ if __name__ == '__main__':
     #pd.DataFrame for converting numpy to pd
     predictions = pd.DataFrame(predictions)
     actual_labels = pd.DataFrame(actual_labels)
-    predictions.replace({2: 'YES', 1:'NO' }, inplace=True)
-    actual_labels.replace({2: 'YES', 1:'NO' }, inplace=True)
+    print(predictions,actual_labels)
+
+    predictions.replace({2: 'YES', 1:'NO'}, inplace=True)
+    actual_labels.replace({2: 'YES', 1:'NO'}, inplace=True)
     predictions = np.array(predictions)
     actual_labels = np.array(actual_labels)
-
+   
 
     correct_predictions = np.sum(predictions == actual_labels)
     total_predictions = len(actual_labels)
     accuracy = (correct_predictions / total_predictions) * 100
     print(f'{accuracy}%')
+    
     model_folder = 'saved_model'
     if not os.path.exists(model_folder):
         os.makedirs(model_folder)
@@ -131,4 +140,3 @@ if __name__ == '__main__':
     model_path = os.path.join(model_folder, 'model.pth')
     print(model_path)
     torch.save(model.state_dict(), model_path)
-
