@@ -1,3 +1,4 @@
+
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -128,5 +129,4 @@ if not os.path.exists(model_folder):
 model_path = os.path.join(model_folder, 'model.pth')
 print(model_path)
 torch.save(model.state_dict(), model_path)
-
 
