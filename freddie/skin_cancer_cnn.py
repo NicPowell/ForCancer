@@ -2,28 +2,57 @@ import torch
 import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
-from torchvision.datasets import ImageFolder
-from torch.utils.data import DataLoader
-from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
+from torch.utils.data import DataLoader, Dataset
+from PIL import Image
+import os
+import pandas as pd
 
 torch.manual_seed(0)
 
-
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-data_transform = transforms.Compose([
-    transforms.Resize((224, 224)),  # ResNet models usually require this size
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])  # Standard normalization for ResNet
-])
+# Define your custom dataset class
+class CustomDataset(Dataset):
+    def __init__(self, csv_file, root_dir, transform=None, file_extension='.jpg'):
+        self.data_frame = pd.read_csv(csv_file)
+        self.root_dir = root_dir
+        self.transform = transform
+        self.file_extension = file_extension
 
-photos_path = "photos"
+        # Extract unique classes from the 'dx' column in the CSV file
+        self.classes = self.data_frame['dx'].unique()
 
-photos_dataset = ImageFolder(root=photos_path, transform=data_transform)
+    def __len__(self):
+        return len(self.data_frame)
 
-train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(photos_dataset, [0.7, 0.1, 0.2])
+    def __getitem__(self, idx):
+        img_name = os.path.join(self.root_dir, "images", f"{self.data_frame.iloc[idx, 0]}{self.file_extension}")
+        image = Image.open(img_name)
+        label = self.data_frame.iloc[idx, 1]
+        
+        if self.transform:
+            image = self.transform(image)
+        
+        return image, label
 
+
+# Define your data transforms
+
+
+# Path to your CSV file and data directory
+csv_file = '/Users/freddiehurdwood/Desktop/Uni Work/ForCancer/freddie/data/good_metadata.csv'
+root_dir = '/Users/freddiehurdwood/Desktop/Uni Work/ForCancer/freddie/data'
+
+# Create custom dataset instance
+custom_dataset = CustomDataset(csv_file=csv_file, root_dir=root_dir, transform=data_transform)
+
+# Split dataset into train, validation, and test sets
+train_size = int(0.7 * len(custom_dataset))
+val_size = int(0.1 * len(custom_dataset))
+test_size = len(custom_dataset) - train_size - val_size
+train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(custom_dataset, [train_size, val_size, test_size])
+
+# Create data loaders
 train_loader = DataLoader(train_dataset, batch_size=100, shuffle=True)
 val_loader = DataLoader(val_dataset, batch_size=100)
 test_loader = DataLoader(test_dataset, batch_size=1000, shuffle=False)
@@ -34,13 +63,11 @@ print("Test set size:", len(test_loader.dataset))
 
 # Load a pre-trained ResNet model
 pretrained_resnet = torchvision.models.resnet18(pretrained=True)
-
-# Freeze all the parameters in the pre-trained model
 for param in pretrained_resnet.parameters():
     param.requires_grad = False
 
 # Modify the fully connected layer to match the number of classes in your dataset
-num_classes = len(photos_dataset.classes)
+num_classes = len(custom_dataset.classes)
 pretrained_resnet.fc = nn.Linear(pretrained_resnet.fc.in_features, num_classes)
 
 # Move the model to the appropriate device
@@ -49,8 +76,7 @@ pretrained_resnet.to(device)
 # Set the optimizer
 opt = torch.optim.Adam(pretrained_resnet.parameters(), lr=0.001)
 
-# Define train and test functions (similar to your original code)
-
+# Define train and test functions
 def train(model):
     model.train()
     for images, labels in train_loader:
@@ -80,7 +106,3 @@ def test(model, epoch):
 for epoch in range(5):  # You can adjust the number of epochs as needed
     train(pretrained_resnet)
     test(pretrained_resnet, epoch)
-
-
-
-
