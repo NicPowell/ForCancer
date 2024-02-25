@@ -105,24 +105,30 @@
     </div>
 
     <script>
-        function uploadImage() {
-            var form = document.getElementById("uploadForm");
-            var formData = new FormData(form);
-            var xhr = new XMLHttpRequest();
-            
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        window.location.href = "/result?result=" + xhr.responseText; // Redirect to result page
-                    } else {
-                        alert('Error: ' + xhr.status);
-                    }
+       function uploadImage() {
+    var form = document.getElementById("uploadForm");
+    var formData = new FormData(form);
+    console.log(formData); // Check FormData object in the console
+    var xhr = new XMLHttpRequest();
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.message) {
+                    alert(response.message); // Alert message
+                } else {
+                    alert('Image submitted'); // Default message if no custom message is received
                 }
-            };
-            
-            xhr.open("POST", "/classify", true);
-            xhr.send(formData);
+            } else {
+                alert('Error: ' + xhr.status);
+            }
         }
+    };
+    
+    xhr.open("POST", "/classify", true);
+    xhr.send(formData);
+}
 
         function previewImage(event) {
             var file = event.target.files[0];
