@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesion Classification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f7f6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .tab {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px 20px;
+            z-index: 1000;
+            width: 90%; /* Adjust as needed */
+            box-sizing: border-box;
+        }
+        .tab a {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .tab a:hover {
+            background-color: #ddd;
+        }
+        .content {
+            margin-top: 50px; /* Adjust to match height of tab menu */
+            padding-top: 20px; /* Add padding to avoid content being hidden behind fixed menu */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tab">
+            <a href="/skin_cancer" class="tablinks">Skin Cancer</a>
+            <a href="/lung_cancer" class="tablinks">Lung Cancer</a>
+        </div>
+
+        <div class="content">
+            <!-- Other content here -->
+            <p>Cancer is bad</p>
+            <!-- More content -->
+        </div>
+    </div>
+</body>
+</html>

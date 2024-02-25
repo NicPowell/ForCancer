@@ -1,22 +1,19 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('homepage.html')
+    return render_template('index.html')
 
-@app.route('/classify', methods=['POST'])
-def classify():
-    # Handle image classification using your CNN model
-    # For demonstration purposes, let's assume the result is 'Cancerous'
-    result = 'cancerous'
-    return result
 
-@app.route('/result')
-def result():
-    result = request.args.get('result')  # Get result from query parameter
-    return render_template('result.html', result=result)
+@app.route('/skin_cancer')
+def skin_cancer():
+    return render_template('skincancer.html')
+
+@app.route('/lung_cancer')
+def lung_cancer():
+    return render_template('lungcancer.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
