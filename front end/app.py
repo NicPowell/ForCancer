@@ -30,6 +30,8 @@ def lung_cancer():
 @app.route('/submit', methods=['POST'])
 def submit():
     # Handle form submission
+    data = request.json
+    print("Data received:", data)
     return jsonify({'message': 'Data received successfully'})
 
 @app.route('/classify', methods=['POST'])
