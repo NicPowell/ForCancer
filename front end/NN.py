@@ -25,12 +25,8 @@ def predict(data):
     data = np.array([mapping.get(key, value) for key, value in data.items()])
     
     data = data.astype(int)
-<<<<<<< HEAD
-    print(data)
-=======
     #
     # print(data)
->>>>>>> b9dd066 (lol)
     N = len(data)
     
     class Net(nn.Module):
@@ -49,18 +45,6 @@ def predict(data):
     loaded_model = Net(input_size=N)
     loaded_model.load_state_dict(torch.load(model_path))
     loaded_model.eval()
-<<<<<<< HEAD
-    
-    data = torch.tensor(data, dtype=torch.float32)
-    output = loaded_model(data)
-    output = np.round(output.tolist())
-    
-    predictions = pd.DataFrame(output)
-    predictions.replace({2: 'YES', 1: 'NO' }, inplace=True)
-    print(predictions)
-    
-    return predictions
-=======
     
     data = torch.tensor(data, dtype=torch.float32)
     output = loaded_model(data)
@@ -80,7 +64,6 @@ def predict(data):
     result_sentence = (f"You are statistically likely to be: {predictions.iloc[0, 0]} for lung cancer")
 
     return result_sentence
->>>>>>> b9dd066 (lol)
 
 
     # Test the loaded model
@@ -99,9 +82,4 @@ def predict(data):
 if __name__ == "__main__":
     data = {'1': 'yes', '2': '54', '3': 'yes', '4': 'yes', '5': 'yes', '6': 'yes', '7': 'yes', '8': 'yes', '9': 'yes', '10': 'yes', '11': 'yes', '12': 'yes', '13': 'yes', '14': 'yes', '15': 
 'yes'}
-<<<<<<< HEAD
     predict(data)
-
-=======
-    predict(data)
->>>>>>> b9dd066 (lol)
