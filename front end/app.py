@@ -39,8 +39,15 @@ def submit():
     # Handle form submission
     data = request.json
     predictions = predict(data)
-
+    print('')
+    print('')
+    print('')
+    print('')
     print(predictions)
+    print('')
+    print('')
+    print('')
+    print('')
     return jsonify({'message': 'Data received successfully'})
 
 @app.route('/classify', methods=['POST'])
