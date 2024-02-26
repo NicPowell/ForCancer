@@ -46,6 +46,18 @@ def predict_image(image_path, model, class_labels, mean, std):
     
     # Get the predicted class label
     predicted_class_label = class_labels[predicted_class_index]
+    class_labels = {
+       
+        0: 'Actinic keratoses and intraepithelial carcinoma / Bowens disease',
+        1: 'basal cell carcinoma',
+        2: 'benign keratosis-like lesion',
+        3: 'dermatofibroma',
+        4: 'melanoma',
+        5: 'melanocytic nevi',
+        6: 'vascular lesion'
+        }
+
+    predicted_class_label = class_labels.get(predicted_class_label, "Unknown")
     top_prob = probabilities[predicted_class_index]
     top_prob = top_prob.item()
     rounded_prob = round(top_prob * 100, 2)
