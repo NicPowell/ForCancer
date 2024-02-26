@@ -7,10 +7,6 @@ from PIL import Image
 import os
 import pandas as pd
 
-torch.manual_seed(0)
-
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
 # Define your custom dataset class
 class CustomDataset(Dataset):
     def __init__(self, csv_file, root_dir, transform=None, file_extension='.jpg'):
@@ -18,8 +14,6 @@ class CustomDataset(Dataset):
         self.root_dir = root_dir
         self.transform = transform
         self.file_extension = file_extension
-
-        # Extract unique classes from the 'dx' column in the CSV file
         self.classes = self.data_frame['dx'].unique()
 
     def __len__(self):
@@ -34,7 +28,6 @@ class CustomDataset(Dataset):
             image = self.transform(image)
         
         return image, label
-
 
 # Define your data transforms
 data_transform = transforms.Compose([
@@ -61,38 +54,39 @@ train_loader = DataLoader(train_dataset, batch_size=40, shuffle=True)
 val_loader = DataLoader(val_dataset, batch_size=40)
 test_loader = DataLoader(test_dataset, batch_size=40, shuffle=False)
 
-print("Training set size:", len(train_loader.dataset))
-print("Validation set size:", len(val_loader.dataset))
-print("Test set size:", len(test_loader.dataset))
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# Load a pretrained MobileNetV2 model
-pretrained_mobilenetv2 = torchvision.models.mobilenet_v2(pretrained=True)
-for param in pretrained_mobilenetv2.parameters():
-    param.requires_grad = False
+# Load a new instance of the MobileNetV2 model
+model = torchvision.models.mobilenet_v2(pretrained=False)
 
 # Modify the fully connected layer to match the number of classes in your dataset
 num_classes = len(custom_dataset.classes)
-pretrained_mobilenetv2.classifier[1] = nn.Linear(pretrained_mobilenetv2.last_channel, num_classes)
+model.classifier[1] = nn.Linear(model.last_channel, num_classes)
 
 # Move the model to the appropriate device
-pretrained_mobilenetv2.to(device)
+model.to(device)
+
+# Load the saved model weights
+saved_model_path = 'pretrained_mobilenetv2.pth'
+checkpoint = torch.load(saved_model_path)
+model.load_state_dict(checkpoint['model_state_dict'])
 
 # Set the optimizer
-opt = torch.optim.Adam(pretrained_mobilenetv2.parameters(), lr=0.001)
+opt = torch.optim.Adam(model.parameters(), lr=0.001)
 
 # Define train and test functions
 def train(model):
     model.train()
-    i = 1
+    i = 0
     for images, labels in train_loader:
         images = images.to(device)
         labels = labels.to(device)
         opt.zero_grad()
         logits = model(images)
         loss = nn.functional.cross_entropy(logits, labels)
-        loss.backward()
         print(i, loss)
-        i+= 1
+        i += 1
+        loss.backward()
         opt.step()
 
 def test(model, epoch):
@@ -110,20 +104,16 @@ def test(model, epoch):
     print(f'Test accuracy after {epoch + 1} epochs: {100 * correct / total} %')
 
 # Train and test the model
-for epoch in range(5    ):  # You can adjust the number of epochs as needed
-    train(pretrained_mobilenetv2)
-    test(pretrained_mobilenetv2, epoch)
-
-
-model_save_path = 'pretrained_mobilenetv2.pth'
-
+for epoch in range(10):  # You can adjust the number of epochs as needed
+    train(model)
+    test(model, epoch)
 # Save the model state dictionary along with any necessary metadata
 torch.save({
-    'model_state_dict': pretrained_mobilenetv2.state_dict(),
+    'model_state_dict': model.state_dict(),
     'num_classes': num_classes,
     'class_labels': custom_dataset.classes,
     'mean': [0.485, 0.456, 0.406],
     'std': [0.229, 0.224, 0.225]
-}, model_save_path)
+}, 'updated_mobilenetv2.pth')
 
-print("Model saved successfully!")
+print("New Model saved successfully!")
