@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Outcomes</title>
+</head>
+<body>
+    <h1>Prediction Outcomes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Prediction</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for index, prediction in predictions.items() %}
+                <tr>
+                    <td>{{ index }}</td>
+                    <td>{{ prediction }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

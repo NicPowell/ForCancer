@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from inference import load_model, predict_image
 import os
-
+from NN import predict
 app = Flask(__name__)
 
 # Load the model, class labels, mean, and std
@@ -31,7 +31,8 @@ def lung_cancer():
 def submit():
     # Handle form submission
     data = request.json
-    print("Data received:", data)
+    predict(data)
+    #predict(data)
     return jsonify({'message': 'Data received successfully'})
 
 @app.route('/classify', methods=['POST'])
