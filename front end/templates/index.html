@@ -12,9 +12,11 @@
             padding: 0;
         }
         .container {
-            max-width: 1000px;
+            max-width: 600px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f1f7f6;
+
         }
         .tab {
             position: fixed;
@@ -40,9 +42,24 @@
         .tab a:hover {
             background-color: #ddd;
         }
+        .title {
+    margin-top: 50px;
+    padding-top: 40px;
+    text-align: center; /* Center the text horizontally */
+    font-size: 24px; /* Adjust the font size as needed */
+    font-weight: bold; /* Make the text bold */
+    background-color: #f1f7f6;
+}
         .content {
-            margin-top: 50px; /* Adjust to match height of tab menu */
-            padding-top: 20px; /* Add padding to avoid content being hidden behind fixed menu */
+            margin-top: 20px; /* Adjust to match height of tab menu */
+            padding-top: 10px; /* Add padding to avoid content being hidden behind fixed menu */
+            background-color: #f1f7f6;
+        }
+        .content p {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f1f7f6;
         }
     </style>
 </head>
@@ -52,12 +69,20 @@
             <a href="/" class="tablinks">Home</a>
             <a href="/skin_cancer" class="tablinks">Skin Cancer</a>
             <a href="/lung_cancer" class="tablinks">Lung Cancer</a>
+            <a href="/brain_cancer" class="tablinks">Brain Cancer</a>
         </div>
-
+        <div class="title">
+           <h> <u>Cancer Crushers </u></h>
+            </div>
         <div class="content">
-            <!-- Other content here -->
-            <p>Cancer is bad</p>
-            <!-- More content -->
+            
+            <p>Welcome to our cancer awareness page. Cancer is a formidable adversary, responsible for millions of deaths worldwide each year. Despite advances in research and treatment, it remains a leading cause of death globally. However, amid the sobering statistics, there lies a crucial message: early detection can be life-saving.</p>
+
+            <p>Using Machine Learning methods, cancer classification can be as simple as uploading an image, or filling out a quick questionaire, with our software instantly providing results and potential next steps.</p>
+
+            <p>Please select a classfier using the tabs above. </p>
+
+            
         </div>
     </div>
 </body>

@@ -11,13 +11,39 @@
             margin: 0;
             padding: 0;
         }
+    
         .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
+
+            }
+        .tab {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
+            z-index: 1000;
+            width: 90%; /* Adjust as needed */
+            box-sizing: border-box;
+        }
+        .tab a {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .tab a:hover {
+            background-color: #ddd;
         }
         h1 {
             color: #333;
@@ -28,6 +54,9 @@
         }
         input[type="file"] {
             display: none; /* Hide the file input */
+        }
+        .label-container {
+            text-align: center; /* Center the content horizontally */
         }
         label {
             background-color: #f39c12; /* Orange button background */
@@ -63,8 +92,17 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Lung Cancer Classification</h1>
+
+        <div class="container">
+
+        <div class="tab">
+            <a href="/" class="tablinks">Home</a>
+            <a href="/skin_cancer" class="tablinks">Skin Cancer</a>
+            <a href="/lung_cancer" class="tablinks">Lung Cancer</a>
+            <a href="/brain_cancer" class="tablinks">Brain Cancer</a>
+        </div>
+
+        <h1>Skin cancer classification from image</h1>
 
         <form id="uploadForm" enctype="multipart/form-data">
             <label for="fileInput">Choose Image</label>
@@ -89,7 +127,7 @@
                     var probabilities = response.probabilities;
                     
                     // Redirect to the result page with the received values
-                    window.location.href = '/result?predicted_class=' + predictedClass + '&probabilities=' + probabilities;
+                    window.location.href = '/result_skin?predicted_class=' + predictedClass + '&probabilities=' + probabilities;
                 } else {
                     alert('Error: ' + xhr.status);
                 }

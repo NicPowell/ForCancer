@@ -19,6 +19,30 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        .tab {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px 20px;
+            z-index: 1000;
+            width: 90%; /* Adjust as needed */
+            box-sizing: border-box;
+        }
+        .tab a {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .tab a:hover {
+            background-color: #ddd;
+        }
         h1 {
             color: #333;
             text-align: center;
@@ -64,7 +88,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>Brain Cancer Classification from MRI</h1>
+        <div class="tab">
+            <a href="/" class="tablinks">Home</a>
+            <a href="/skin_cancer" class="tablinks">Skin Cancer</a>
+            <a href="/lung_cancer" class="tablinks">Lung Cancer</a>
+            <a href="/brain_cancer" class="tablinks">Brain Cancer</a>
+        </div>
+        <h1>Brain cancer classification from MRI</h1>
 
         <form id="uploadForm" enctype="multipart/form-data">
             <label for="fileInput">Choose Image</label>
@@ -89,14 +119,14 @@
                     var probabilities = response.probabilities;
                     
                     // Redirect to the result page with the received values
-                    window.location.href = '/result?predicted_class=' + predictedClass + '&probabilities=' + probabilities;
+                    window.location.href = '/result_brain?predicted_class=' + predictedClass + '&probabilities=' + probabilities;
                 } else {
                     alert('Error: ' + xhr.status);
                 }
             }
         };
 
-        xhr.open("POST", "/classify", true);
+        xhr.open("POST", "/classify_brain", true);
         xhr.send(formData);
     }
 

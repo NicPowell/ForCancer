@@ -12,7 +12,7 @@ import os
 
 
 def predict(data):
-    model_path = 'saved_model\model.pth'
+    model_path = '/Users/freddiehurdwood/Desktop/Uni Work/ForCancer/saved_model/model.pth'
     # Load the model from the different folder
     mapping = {'yes': 2, 'no': 1}
 
@@ -25,7 +25,12 @@ def predict(data):
     data = np.array([mapping.get(key, value) for key, value in data.items()])
     
     data = data.astype(int)
+<<<<<<< HEAD
     print(data)
+=======
+    #
+    # print(data)
+>>>>>>> b9dd066 (lol)
     N = len(data)
     
     class Net(nn.Module):
@@ -44,6 +49,7 @@ def predict(data):
     loaded_model = Net(input_size=N)
     loaded_model.load_state_dict(torch.load(model_path))
     loaded_model.eval()
+<<<<<<< HEAD
     
     data = torch.tensor(data, dtype=torch.float32)
     output = loaded_model(data)
@@ -54,6 +60,27 @@ def predict(data):
     print(predictions)
     
     return predictions
+=======
+    
+    data = torch.tensor(data, dtype=torch.float32)
+    output = loaded_model(data)
+    output1 = np.round(output.tolist())
+    output = output.item()
+    predictions = pd.DataFrame(output1)
+    predictions.replace({2: 'Positive', 1: 'Negative', 0: 'Negative' }, inplace=True)
+    
+    if predictions.iloc[0, 0] == 'Positive':
+        probability = 2/output
+        if probability >=1:
+            probability -= 1
+    else:
+        probability = 1/output
+        if probability >=1:
+            probability -= 1
+    result_sentence = (f"You are statistically likely to be: {predictions.iloc[0, 0]} for lung cancer")
+
+    return result_sentence
+>>>>>>> b9dd066 (lol)
 
 
     # Test the loaded model
@@ -72,5 +99,9 @@ def predict(data):
 if __name__ == "__main__":
     data = {'1': 'yes', '2': '54', '3': 'yes', '4': 'yes', '5': 'yes', '6': 'yes', '7': 'yes', '8': 'yes', '9': 'yes', '10': 'yes', '11': 'yes', '12': 'yes', '13': 'yes', '14': 'yes', '15': 
 'yes'}
+<<<<<<< HEAD
     predict(data)
 
+=======
+    predict(data)
+>>>>>>> b9dd066 (lol)

@@ -34,13 +34,16 @@
         .predicted-class {
             font-weight: bold;
         }
+        .certain {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Classification Result</h1>
+        <h1>Brain Scan Classification Result</h1>
         <div class="result">
-            <p>The CNN has classified your submitted MRI image as being <span class="predicted-class">{{ predicted_class }}</span> with a certaintiy of {{ probabilities }}. If you wish to learn more about what this means, please refer to <a href="https://www.cancerresearchuk.org/about-cancer/brain-tumours/types">Cancer Research UK.</a></p>
+            <p>The CNN has classified your submitted MRI image as being <u><span class="predicted-class">{{ predicted_class }}</span></u> with a certaintiy of <u><span class="certain">{{ probabilities }}</span></u>%. If you wish to learn more about what this means, please refer to <a href="https://www.cancerresearchuk.org/about-cancer/brain-tumours/types">Cancer Research UK.</a></p>
          
         </div>
     </div>
