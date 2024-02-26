@@ -69,7 +69,7 @@ def result():
     predicted_class = request.args.get('predicted_class')
     probabilities = request.args.get('probabilities')
     print('hello',predicted_class)
-    return render_template('result.html', predicted_class=predicted_class, probabilities=probabilities)
+    return render_template('result_skin.html', predicted_class=predicted_class, probabilities=probabilities)
 
 if __name__ == '__main__':
     app.run(debug=True)
