@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classification Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .result p {
+            margin: 0;
+            padding: 5px 0;
+        }
+        .predicted-class {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Classification Result</h1>
+        <div class="result">
+            <p>The CNN has classified your submitted MRI image as being <span class="predicted-class">{{ predicted_class }}</span> with a certaintiy of {{ probabilities }}. If you wish to learn more about what this means, please refer to <a href="https://www.cancerresearchuk.org/about-cancer/brain-tumours/types">Cancer Research UK.</a></p>
+         
+        </div>
+    </div>
+</body>
+</html>
